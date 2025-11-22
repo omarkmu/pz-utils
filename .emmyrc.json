@@ -1,0 +1,4 @@
+{
+    "runtime.version": "Lua5.1",
+    "diagnostics.disable": ["unnecessary-if"]
+}
