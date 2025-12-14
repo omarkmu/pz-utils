@@ -3,7 +3,7 @@
 import fs from 'fs-extra'
 import path from 'path'
 import { Argv } from 'yargs'
-import { AnalyzeCommandArgs, OutputFormat } from './helpers'
+import { AnalyzeCommandArgs, getFileList, OutputFormat } from './helpers'
 import FtlAnalyzer from './FtlAnalyzer'
 import { getReport } from './report'
 
@@ -11,7 +11,10 @@ import { getReport } from './report'
  * Checks .ftl files for problems.
  */
 export const analyzeFromCommand = async (args: AnalyzeCommandArgs) => {
-    const isGitHub = args.format === OutputFormat.GitHub
+    const isGitHub =
+        args.format === OutputFormat.GitHubSummary ||
+        args.format === OutputFormat.GitHubAnnotations
+
     const analyzer = new FtlAnalyzer({
         ...args,
         useRelativePaths: isGitHub,
@@ -26,10 +29,11 @@ export const analyzeFromCommand = async (args: AnalyzeCommandArgs) => {
 
     await analyzer.processDiscoveredFiles(discovered)
 
-    const report = getReport(
+    const report = await getReport(
         analyzer.getDiagnostics(),
         args.format,
         args.path,
+        getFileList(discovered.collections, discovered.ungrouped),
         isGitHub && args.strict,
     )
 
@@ -58,11 +62,13 @@ export const buildAnalyzeCommand = (yargs: Argv) => {
             alias: 'f',
             // default to github format when running as a github action
             default:
-                process.env.GITHUB_ACTIONS === 'true'
-                    ? OutputFormat.GitHub
-                    : OutputFormat.Text,
+                process.env.GITHUB_ACTIONS !== 'true'
+                    ? OutputFormat.Text
+                    : process.env.GITHUB_STEP_SUMMARY !== undefined
+                    ? OutputFormat.GitHubSummary
+                    : OutputFormat.GitHubAnnotations,
             desc: 'The format to use for output',
-            choices: ['text', 'json', 'github', 'silent'],
+            choices: ['text', 'json', 'github', 'github-annotations', 'silent'],
         })
         .option('ignore', {
             type: 'array',
@@ -91,7 +97,7 @@ export const buildAnalyzeCommand = (yargs: Argv) => {
                         return OutputFormat.JSON
 
                     case 'GITHUB':
-                        return OutputFormat.GitHub
+                        return OutputFormat.GitHubSummary
 
                     default:
                         return OutputFormat.Text

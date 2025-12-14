@@ -65,8 +65,15 @@ export enum OutputFormat {
 
     /**
      * Outputs in a format readable by GitHub actions.
+     * This includes annotations and a markdown summary.
      */
-    GitHub = 'github',
+    GitHubSummary = 'github',
+
+    /**
+     * Outputs in a format readable by GitHub actions.
+     * This includes annotations for each error and warning, up to 10.
+     */
+    GitHubAnnotations = 'github-annotations',
 
     /**
      * No output.

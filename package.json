@@ -19,6 +19,7 @@
 		"extract-cldr": "node build/extract-cldr"
 	},
 	"dependencies": {
+		"@actions/core": "^2.0.1",
 		"@fluent/syntax": "^0.19.0",
 		"cldr-core": "latest",
 		"fs-extra": "^11.3.2",

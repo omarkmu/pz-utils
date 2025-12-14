@@ -7,6 +7,8 @@ import {
     AnnotationItem,
     DiagnosticRange,
     ExtractedComment,
+    FileCollection,
+    FileGroup,
     FileInfo,
     IReportable,
     ISpan,
@@ -122,6 +124,27 @@ export const getBundleDisplay = (bundle?: string) => {
 }
 
 /**
+ * Gets a file list from a list of collections.
+ */
+export const getFileList = (
+    collections: FileCollection[],
+    ungrouped?: FileGroup,
+): FileInfo[] => {
+    const analyzedFiles: FileInfo[] = []
+    for (const col of collections) {
+        for (const group of col.groups.values()) {
+            analyzedFiles.push(...group.files.values())
+        }
+    }
+
+    if (ungrouped !== undefined) {
+        analyzedFiles.push(...ungrouped.files.values())
+    }
+
+    return analyzedFiles
+}
+
+/**
  * Gets information about a path, relative to a base path.
  */
 export const getPathInfo = (
@@ -151,6 +174,18 @@ export const getWarningCategory = (code: string): string => {
     }
 
     return code.slice(0, dash)
+}
+
+/**
+ * Checks whether a path is within another.
+ */
+export const isPathInside = (childPath: string, parent: string): boolean => {
+    const relative = path.relative(parent, childPath)
+    if (!relative) {
+        return false
+    }
+
+    return !relative.startsWith('..') && !path.isAbsolute(relative)
 }
 
 /**

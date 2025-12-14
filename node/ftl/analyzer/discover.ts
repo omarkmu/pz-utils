@@ -8,19 +8,8 @@ import {
     FileCollection,
     DiscoveryResult,
     getPathInfo,
+    isPathInside,
 } from './helpers'
-
-/**
- * Checks whether a path is within another.
- */
-const isPathInside = (childPath: string, parent: string): boolean => {
-    const relative = path.relative(parent, childPath)
-    if (!relative) {
-        return false
-    }
-
-    return !relative.startsWith('..') && !path.isAbsolute(relative)
-}
 
 /**
  * Attempts to collect .ftl files from locale subdirectories within a top-level directory.
