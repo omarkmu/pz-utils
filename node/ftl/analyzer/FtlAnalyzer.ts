@@ -713,6 +713,7 @@ export default class FtlAnalyzer {
                 end: span.end,
             },
             ignore,
+            ignoreAll: state.ignoreAll,
             translate: state.translate,
             value: entry.value ?? undefined,
             variables: this.collectVariables(entry.value),
@@ -802,11 +803,15 @@ export default class FtlAnalyzer {
     ) {
         let { value } = annot
 
-        const space = value.indexOf(' ')
-        const firstWord = value.slice(0, space !== -1 ? space : undefined)
-        const enable = firstWord === 'enable'
-        value = value.slice(space + 1).trim()
+        const firstSpace = value.indexOf(' ')
+        const firstWord = value
+            .slice(0, firstSpace !== -1 ? firstSpace : undefined)
+            .trimEnd()
 
+        const nextSpace = value.indexOf(' ', firstSpace + 1)
+        value = nextSpace === -1 ? '' : value.slice(nextSpace + 1).trim()
+
+        const enable = firstWord === 'enable'
         if (!enable && firstWord !== 'disable') {
             return
         }
