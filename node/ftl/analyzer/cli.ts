@@ -97,7 +97,12 @@ export const buildAnalyzeCommand = (yargs: Argv) => {
                         return OutputFormat.JSON
 
                     case 'GITHUB':
-                        return OutputFormat.GitHubSummary
+                        return process.env.GITHUB_STEP_SUMMARY !== undefined
+                            ? OutputFormat.GitHubSummary
+                            : OutputFormat.GitHubAnnotations
+
+                    case 'GITHUB-ANNOTATIONS':
+                        return OutputFormat.GitHubAnnotations
 
                     default:
                         return OutputFormat.Text
