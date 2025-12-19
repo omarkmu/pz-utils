@@ -2,7 +2,7 @@
  * Helper types and functions for handling plural data.
  */
 
-import { OutputFormat } from '../output-format'
+import { ExtractArgs } from '../shared'
 
 /**
  * Operands for plural rules.
@@ -112,42 +112,7 @@ export interface PluralValueRange {
 /**
  * Arguments for extraction of plural data.
  */
-export interface ExtractPluralsArgs {
-    /**
-     * The path to use for the output file.
-     */
-    output?: string
-
-    /**
-     * The format to use for output.
-     */
-    format?: OutputFormat
-
-    /**
-     * The header to include with a newline.
-     */
-    header?: string | false
-
-    /**
-     * The prefix to include directly before the generated statement or expression.
-     */
-    prefix?: string | false
-
-    /**
-     * The trailer to include.
-     */
-    trailer?: string | false
-
-    /**
-     * Flag for whether output should be written with newlines and indentation.
-     */
-    pretty: boolean
-
-    /**
-     * Flag for whether output should be written with a return statement.
-     */
-    return?: boolean
-}
+export type ExtractPluralsArgs = ExtractArgs
 
 /**
  * Returns a rule string with samples removed.
