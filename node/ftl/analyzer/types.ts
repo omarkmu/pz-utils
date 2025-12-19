@@ -259,6 +259,16 @@ interface ElementInfo<T> {
     idSpan: ISpan
 
     /**
+     * The set of warning types and categories ignored by the element.
+     */
+    ignore: Set<string>
+
+    /**
+     * Flag for whether all diagnostics should be ignored.
+     */
+    ignoreAll?: boolean
+
+    /**
      * Option for whether the element is marked as
      * required, optional, or disallowed for translation.
      */
@@ -298,16 +308,6 @@ interface BaseMessageInfo<
      * Associates attribute identfiers to information about attributes.
      */
     attributes: Record<string, AttributeInfo>
-
-    /**
-     * Flag for whether all diagnostics should be ignored.
-     */
-    ignoreAll?: boolean
-
-    /**
-     * The set of warning types and categories ignored by the element.
-     */
-    ignore: Set<string>
 }
 
 /**

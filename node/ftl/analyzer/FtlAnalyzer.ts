@@ -167,14 +167,12 @@ export default class FtlAnalyzer {
         code: WarnCode,
         ...args: string[]
     ) {
-        if ('isTerm' in entry) {
-            if (entry.ignoreAll) {
-                return
-            }
+        if (entry.ignoreAll) {
+            return
+        }
 
-            if (this.shouldIgnore(code, entry.ignore)) {
-                return
-            }
+        if (this.shouldIgnore(code, entry.ignore)) {
+            return
         }
 
         this.addDiagnostic(
@@ -725,6 +723,8 @@ export default class FtlAnalyzer {
                     idSpan: (attr.id as HasSpan).span,
                     translate: state.translate,
                     value: attr.value,
+                    ignore,
+                    ignoreAll: state.ignoreAll,
                     params: {},
                     variables: this.collectVariables(attr.value),
                 }
@@ -821,6 +821,12 @@ export default class FtlAnalyzer {
 
         if (value === '') {
             target.ignoreAll = !enable
+
+            if ('attributes' in target) {
+                for (const attr of Object.values(target.attributes)) {
+                    attr.ignoreAll = !enable
+                }
+            }
         }
 
         const list = value
