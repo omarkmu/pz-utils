@@ -6,6 +6,7 @@
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import { buildPluralsCommand, extractPlurals } from './plurals'
+import { buildDatetimeCommand, extractDateTime } from './datetime'
 
 /**
  * Parses arguments and runs the script.
@@ -18,6 +19,12 @@ export const main = async () => {
             'Extracts CLDR plural data.',
             buildPluralsCommand,
             extractPlurals,
+        )
+        .command(
+            'datetime',
+            'Extracts CLDR datetime data.',
+            buildDatetimeCommand,
+            extractDateTime,
         )
         .strictCommands()
         .demandCommand()
