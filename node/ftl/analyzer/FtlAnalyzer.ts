@@ -549,10 +549,20 @@ export default class FtlAnalyzer {
             }
 
             const srcTerm = srcTermById[term.id]
-            if (srcTerm) {
-                this.compareAttributes(file, term, srcTerm.attributes)
+            if (!srcTerm) {
+                return rec
             }
 
+            if (srcTerm.translate === TranslateType.Disallowed) {
+                this.addEntryWarning(
+                    file,
+                    term,
+                    'do-not-translate-term',
+                    term.name,
+                )
+            }
+
+            this.compareAttributes(file, term, srcTerm.attributes)
             return rec
         }, {} as Record<string, TermInfo | undefined>)
 

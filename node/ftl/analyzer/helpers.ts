@@ -23,6 +23,7 @@ export type WarnCode = keyof typeof WARN_STRINGS
 
 const WARN_STRINGS = {
     'do-not-translate-message': 'Message "{0}" should not be translated',
+    'do-not-translate-term': 'Term "{0}" should not be translated',
     'do-not-translate-attribute': 'Attribute "{0}" should not be translated',
     'identical-message':
         'Message "{0}" is identical to the source locale message',
