@@ -808,8 +808,7 @@ export default class FtlAnalyzer {
             .slice(0, firstSpace !== -1 ? firstSpace : undefined)
             .trimEnd()
 
-        const nextSpace = value.indexOf(' ', firstSpace + 1)
-        value = nextSpace === -1 ? '' : value.slice(nextSpace + 1).trim()
+        value = firstSpace === -1 ? '' : value.slice(firstSpace + 1).trim()
 
         const enable = firstWord === 'enable'
         if (!enable && firstWord !== 'disable') {
@@ -835,9 +834,9 @@ export default class FtlAnalyzer {
             .filter((x) => x)
 
         if (enable) {
-            list.forEach((x) => target.ignore.add(x))
-        } else {
             list.forEach((x) => target.ignore.delete(x))
+        } else {
+            list.forEach((x) => target.ignore.add(x))
         }
     }
 
