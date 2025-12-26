@@ -21,13 +21,20 @@ const REGEXP_LINE = /[^\n]*\n|[^\n]+/g
 
 export type WarnCode = keyof typeof WARN_STRINGS
 
-const WARN_ADD_LOWER: Set<string> = new Set(['identical', 'mismatch-identical'])
 const WARN_STRINGS = {
-    'do-not-translate': '{0} "{1}" should not be translated',
-    identical: '{0} "{1}" is identical to the source locale {2}',
-    duplicate: 'Duplicate {0} "{1}"',
-    'mismatch-identical':
-        '{0} "{1}" should be identical to the source locale {2}',
+    'do-not-translate-message': 'Message "{0}" should not be translated',
+    'do-not-translate-attribute': 'Attribute "{0}" should not be translated',
+    'identical-message':
+        'Message "{0}" is identical to the source locale message',
+    'identical-attribute':
+        'Attribute "{0}" is identical to the source locale attribute',
+    'duplicate-message': 'Duplicate message "{0}"',
+    'duplicate-term': 'Duplicate term "{0}"',
+    'duplicate-attribute': 'Duplicate attribute "{0}"',
+    'mismatch-message':
+        'Message "{0}" should be identical to the source locale message',
+    'mismatch-attribute':
+        'Attribute "{0}" should be identical to the source locale attribute',
     'mismatch-file-bundle':
         'File {0} is assigned to the {1} bundle, but to the {2} bundle in the source locale',
     'unknown-file':
@@ -97,10 +104,6 @@ export const createWarning = (
     span: ISpan,
     ...args: string[]
 ): IReportable => {
-    if (WARN_ADD_LOWER.has(code)) {
-        args.push(args[0].toLowerCase())
-    }
-
     const message = WARN_STRINGS[code].replace(
         /{(\d+)}/g,
         (match: string, index: string) => args[parseInt(index)] || match,
@@ -164,8 +167,8 @@ export const getPathInfo = (
  */
 export const getWarningCategory = (code: string): string => {
     // special case
-    if (code === 'do-not-translate') {
-        return code
+    if (code.startsWith('do-not-translate')) {
+        return 'do-not-translate'
     }
 
     const dash = code.indexOf('-')

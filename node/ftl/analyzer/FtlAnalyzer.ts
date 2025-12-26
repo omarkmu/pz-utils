@@ -374,8 +374,7 @@ export default class FtlAnalyzer {
                     this.addEntryWarning(
                         file,
                         message,
-                        'duplicate',
-                        'message',
+                        'duplicate-message',
                         message.name,
                     )
                 }
@@ -390,8 +389,7 @@ export default class FtlAnalyzer {
                     this.addEntryWarning(
                         file,
                         term,
-                        'duplicate',
-                        'term',
+                        'duplicate-term',
                         term.name,
                     )
                 }
@@ -450,7 +448,7 @@ export default class FtlAnalyzer {
     ) {
         const attributes = entry.attributes
 
-        // terms attributes only need the do-not-translate annotation
+        // term attributes only need the do-not-translate annotation
         if (entry.isTerm) {
             for (const attr of Object.values(attributes)) {
                 const srcAttr = srcAttributes[attr.id]
@@ -459,8 +457,7 @@ export default class FtlAnalyzer {
                     this.addEntryWarning(
                         file,
                         attr,
-                        'do-not-translate',
-                        'Attribute',
+                        'do-not-translate-attribute',
                         attr.name,
                     )
                 }
@@ -475,28 +472,17 @@ export default class FtlAnalyzer {
 
             const srcAttr = srcAttributes[attr.id]
             if (!srcAttr) {
-                if (!this.shouldIgnore('unknown-attribute', entry.ignore)) {
-                    this.addEntryWarning(
-                        file,
-                        attr,
-                        'unknown-attribute',
-                        attr.id,
-                    )
-                }
-
+                this.addEntryWarning(file, attr, 'unknown-attribute', attr.id)
                 continue
             }
 
             if (srcAttr.translate === TranslateType.Disallowed) {
-                if (!this.shouldIgnore('do-not-translate', entry.ignore)) {
-                    this.addEntryWarning(
-                        file,
-                        attr,
-                        'do-not-translate',
-                        'Attribute',
-                        attr.name,
-                    )
-                }
+                this.addEntryWarning(
+                    file,
+                    attr,
+                    'do-not-translate-attribute',
+                    attr.name,
+                )
             }
 
             const isEq = patternsEqual(attr.value, srcAttr.value)
@@ -507,8 +493,7 @@ export default class FtlAnalyzer {
                 this.addEntryWarning(
                     file,
                     attr,
-                    isEq ? 'identical' : 'mismatch-identical',
-                    'Attribute',
+                    isEq ? 'identical-attribute' : 'mismatch-attribute',
                     attr.name,
                 )
             }
@@ -560,7 +545,7 @@ export default class FtlAnalyzer {
 
         file.terms.reduce((rec, term) => {
             if (rec[term.id]) {
-                this.addEntryWarning(file, term, 'duplicate', 'term', term.name)
+                this.addEntryWarning(file, term, 'duplicate-term', term.name)
             }
 
             const srcTerm = srcTermById[term.id]
@@ -574,13 +559,7 @@ export default class FtlAnalyzer {
         // compare messages
         const messageById = file.messages.reduce((rec, msg) => {
             if (rec[msg.id]) {
-                this.addEntryWarning(
-                    file,
-                    msg,
-                    'duplicate',
-                    'message',
-                    msg.name,
-                )
+                this.addEntryWarning(file, msg, 'duplicate-message', msg.name)
             }
 
             rec[msg.id] = msg
@@ -654,8 +633,7 @@ export default class FtlAnalyzer {
             this.addEntryWarning(
                 file,
                 message,
-                'do-not-translate',
-                'Message',
+                'do-not-translate-message',
                 message.name,
             )
         }
@@ -668,8 +646,7 @@ export default class FtlAnalyzer {
             this.addEntryWarning(
                 file,
                 message,
-                isEq ? 'identical' : 'mismatch-identical',
-                'Message',
+                isEq ? 'identical-message' : 'mismatch-message',
                 message.name,
             )
         }
@@ -733,8 +710,7 @@ export default class FtlAnalyzer {
                     this.addEntryWarning(
                         state.file,
                         attrInfo,
-                        'duplicate',
-                        'attribute',
+                        'duplicate-attribute',
                         attrInfo.name,
                     )
                 }
