@@ -3,11 +3,11 @@
 
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
-import { analyzeFromCommand, buildAnalyzeCommand } from './cli'
+import { analyzeFromCommand, buildAnalyzeCommand } from './cli.js'
 
-import FtlAnalyzer from './FtlAnalyzer'
+import FtlAnalyzer from './FtlAnalyzer.js'
 export { FtlAnalyzer }
-export * from './types'
+export * from './types.js'
 
 /**
  * Parses arguments and runs the script.
@@ -24,6 +24,4 @@ export const main = async () => {
         .parse()
 }
 
-if (require.main === module) {
-    void main()
-}
+await main()

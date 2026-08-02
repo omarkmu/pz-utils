@@ -10,7 +10,7 @@ import {
     PluralRuleTable,
     RawPluralData,
     preprocessData,
-} from './helpers'
+} from './helpers.js'
 
 interface ParseContext {
     /**

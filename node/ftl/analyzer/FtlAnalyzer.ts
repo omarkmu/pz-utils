@@ -3,7 +3,7 @@
 import fs from 'fs-extra'
 import path from 'path'
 import murmurhash from 'murmurhash'
-import ast from '@fluent/syntax'
+import * as ast from '@fluent/syntax'
 import { fileURLToPath } from 'url'
 
 import {
@@ -17,7 +17,7 @@ import {
     TranslateType,
     WarnCode,
     patternsEqual,
-} from './helpers'
+} from './helpers.js'
 
 import type {
     AnalyzerArgs,
@@ -38,8 +38,8 @@ import type {
     AttributeInfo,
     IReportable,
     EntryInfo,
-} from './types'
-import { discover } from './discover'
+} from './types.js'
+import { discover } from './discover.js'
 
 const REGEXP_PARAM = /^\$([A-Za-z][\w_-]*)(\??)(?:\s+([^# ]+))?(.*)$/
 

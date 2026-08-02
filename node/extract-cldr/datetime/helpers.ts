@@ -2,7 +2,7 @@
  * Helper types and functions for handling datetime data.
  */
 
-import { ExtractArgs } from '../shared'
+import { ExtractArgs } from '../shared.js'
 
 const NNBSP = String.fromCharCode(8239)
 

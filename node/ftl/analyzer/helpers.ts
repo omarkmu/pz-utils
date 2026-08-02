@@ -1,6 +1,6 @@
 /** Helper types and functions for checking .ftl files. */
 
-import ast from '@fluent/syntax'
+import * as ast from '@fluent/syntax'
 import path from 'path'
 import { pathToFileURL } from 'url'
 import {
@@ -13,9 +13,9 @@ import {
     IReportable,
     ISpan,
     PathInfo,
-} from './types'
+} from './types.js'
 
-export * from './types'
+export * from './types.js'
 
 const REGEXP_LINE = /[^\n]*\n|[^\n]+/g
 

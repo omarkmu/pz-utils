@@ -3,18 +3,18 @@
  */
 
 import type { Argv } from 'yargs'
-import { transformData } from './transform'
+import { transformData } from './transform.js'
 import {
     buildExtractCommand,
     getOutput,
     OutputFormat,
     writeFileOrConsole,
-} from '../shared'
+} from '../shared.js'
 import {
     DateTimeFormats,
     ExtractDateTimeArgs,
     GroupedRawDateTimeData,
-} from './helpers'
+} from './helpers.js'
 
 const DEFAULT_HEADER_LUA = `---Data for formatting dates and times.
 ---This is a generated file; see https://github.com/omarkmu/pz-utils.
@@ -34,12 +34,12 @@ export const buildDatetimeCommand = (
  * Extracts datetime data to the specified output format.
  */
 export const extractDateTime = async (args: ExtractDateTimeArgs) => {
-    const cldrLocales = await import('cldr-core/availableLocales.json')
+    const cldrLocales = (await import('cldr-core/availableLocales.json', { with: { type: "json" } })).default
 
     const grouped: GroupedRawDateTimeData = {}
     for (const locale of cldrLocales.availableLocales.full) {
-        const gregorianPath = `cldr-dates-full/main/${locale}/ca-gregorian`
-        const gregorianData = await import(gregorianPath)
+        const gregorianPath = `cldr-dates-full/main/${locale}/ca-gregorian.json`
+        const gregorianData = await import(gregorianPath, { with: { type: "json" } })
 
         const localeData = gregorianData.default.main[locale]
 

@@ -9,7 +9,7 @@ import {
     DiscoveryResult,
     getPathInfo,
     isPathInside,
-} from './helpers'
+} from './helpers.js'
 
 /**
  * Attempts to collect .ftl files from locale subdirectories within a top-level directory.

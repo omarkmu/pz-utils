@@ -1,6 +1,6 @@
 /** Helper types for analysis. */
 
-import ast from '@fluent/syntax'
+import * as ast from '@fluent/syntax'
 import { DiagnosticSeverity } from 'vscode-languageserver'
 export { DiagnosticSeverity } from 'vscode-languageserver'
 

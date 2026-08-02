@@ -5,8 +5,8 @@
 
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
-import { buildPluralsCommand, extractPlurals } from './plurals'
-import { buildDatetimeCommand, extractDateTime } from './datetime'
+import { buildPluralsCommand, extractPlurals } from './plurals/index.js'
+import { buildDatetimeCommand, extractDateTime } from './datetime/index.js'
 
 /**
  * Parses arguments and runs the script.
@@ -35,6 +35,4 @@ export const main = async () => {
         })
 }
 
-if (require.main === module) {
-    void main()
-}
+await main()

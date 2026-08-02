@@ -3,9 +3,9 @@
 import fs from 'fs-extra'
 import path from 'path'
 import { Argv } from 'yargs'
-import { AnalyzeCommandArgs, getFileList, OutputFormat } from './helpers'
-import FtlAnalyzer from './FtlAnalyzer'
-import { getReport } from './report'
+import { AnalyzeCommandArgs, getFileList, OutputFormat } from './helpers.js'
+import FtlAnalyzer from './FtlAnalyzer.js'
+import { getReport } from './report.js'
 
 /**
  * Checks .ftl files for problems.

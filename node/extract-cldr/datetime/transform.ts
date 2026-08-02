@@ -1,7 +1,7 @@
 /** Handles transforming datetime formats to contain only Java-supported symbols. */
 
-import { primitiveToLua, RawLuaExpression } from '../shared'
-import { alterFormats, GroupedRawDateTimeData, preprocessData } from './helpers'
+import { primitiveToLua, RawLuaExpression } from '../shared.js'
+import { alterFormats, GroupedRawDateTimeData, preprocessData } from './helpers.js'
 
 // eslint-disable-next-line no-control-regex
 const LUA_SPLIT_REGEX = /^([\x00-\x7F]+?)?([^\x00-\x7F]+)([\x00-\x7F]+)?/

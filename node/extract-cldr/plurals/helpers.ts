@@ -2,7 +2,7 @@
  * Helper types and functions for handling plural data.
  */
 
-import { ExtractArgs } from '../shared'
+import { ExtractArgs } from '../shared.js'
 
 /**
  * Operands for plural rules.

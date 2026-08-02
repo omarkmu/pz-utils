@@ -4,6 +4,7 @@
 	"version": "0.1.0",
 	"author": "Omar M.",
 	"license": "MIT",
+	"type": "module",
 	"engines": {
 		"node": "*"
 	},

@@ -12,7 +12,7 @@ import {
     JsonReport,
     OutputFormat,
     ReportResult,
-} from './types'
+} from './types.js'
 
 /**
  * Gets a string indicating the error and warning count.
